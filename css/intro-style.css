@@ -1,0 +1,316 @@
+:root {
+      --navy: #0a1628;
+      --navy-mid: #122040;
+      --gold: #c9a84c;
+      --gold-light: #e8c96d;
+      --gold-pale: rgba(201,168,76,0.12);
+      --white: #ffffff;
+      --off-white: #f5f2ec;
+      --text-muted: rgba(255,255,255,0.45);
+    }
+ 
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+ 
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      min-height: 100vh;
+      overflow-x: hidden;
+      cursor: default;
+    }
+ 
+    /* ── BACKGROUND ── */
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image: url("neulib-bg.png");
+       background-size: cover; 
+       background-position: center;  
+       background-repeat: no-repeat; 
+       min-height: 100vh;
+       overflow: hidden;
+       cursor: default; 
+    }
+ 
+    .bg-radial {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(31, 67, 120, 0.82), rgba(10, 22, 40, 0.82)),
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,168,76,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 100% 100%, rgba(201,168,76,0.08) 0%, transparent 50%);
+}
+ 
+    /* ── LAYOUT ── */
+    .intro-wrapper {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      grid-template-columns: 1fr;
+      padding: 0;
+    }
+ 
+    /* ── TOP BAR ── */
+    .intro-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 48px;
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+      opacity: 0;
+      animation: fadeDown 0.8s ease forwards;
+      animation-delay: 0.2s;
+    }
+ 
+    .neu-badge {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .neu-seal {
+      width: 48px; height: 48px;
+      background: var(--white);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--navy);
+      letter-spacing: 0.05em;
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.2);
+      flex-shrink: 0;
+    }
+    .neu-label span:first-child {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+    .neu-label span:last-child {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+ 
+    .live-clock {
+      text-align: right;
+    }
+    #clock-time {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--na);
+      letter-spacing: 0.05em;
+      line-height: 1;
+    }
+    #clock-date {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      letter-spacing: 0.05em;
+    }
+ 
+    /* ── HERO CENTER ── */
+    .intro-hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 48px;
+      gap: 0;
+    }
+ 
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--white);
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards;
+      animation-delay: 0.5s;
+    }
+ 
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 8vw, 6.5rem);
+      font-weight: 700;
+      line-height: 1.0;
+      color: var(--gold);
+      margin-bottom: 8px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards;
+      animation-delay: 0.7s;
+    }
+ 
+    .hero-title .gold-word {
+      color: var(--white);
+      display: block;
+    }
+
+ 
+    /* ── ENTER BUTTON ── */
+    .enter-btn-wrap {
+      margin-top: 48px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards;
+      animation-delay: 1.2s;
+    }
+ 
+    .btn-enter {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: transparent;
+      border: 1.5px solid var(--gold);
+      color: var(--gold);
+      padding: 15px 48px;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: color 0.3s ease;
+    }
+ 
+    .btn-enter::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: translateX(-100%);
+      transition: transform 0.35s ease;
+      z-index: 0;
+    }
+ 
+    .btn-enter:hover::before { transform: translateX(0); }
+    .btn-enter:hover { color: var(--navy); }
+ 
+    .btn-enter span,
+    .btn-enter svg {
+      position: relative;
+      z-index: 1;
+    }
+ 
+    .btn-enter .arrow {
+      transition: transform 0.3s ease;
+    }
+    .btn-enter:hover .arrow { transform: translateX(6px); }
+ 
+    /* ── BOTTOM BAR: LIBRARY HOURS ── */
+    .intro-bottom {
+      border-top: 1px solid rgba(201,168,76,0.12);
+      padding: 20px 48px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards;
+      animation-delay: 1.4s;
+    }
+ 
+    .hours-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      font-weight: 600;
+      margin-right: 24px;
+      white-space: nowrap;
+    }
+ 
+    .hours-list {
+      display: flex;
+      gap: 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+ 
+    .hours-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 20px;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .hours-item:last-child { border-right: none; }
+ 
+    .hours-day {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .hours-time {
+      font-size: 0.78rem;
+      color: var(--white);
+      font-weight: 600;
+    }
+ 
+    /* open/closed indicator */
+    .status-dot {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-left: 20px;
+    }
+    .status-dot.open {
+      background: rgba(22,163,74,0.15);
+      color: #4ade80;
+      border: 1px solid rgba(22,163,74,0.3);
+    }
+    .status-dot.closed {
+      background: rgba(239,68,68,0.15);
+      color: #f87171;
+      border: 1px solid rgba(239,68,68,0.3);
+    }
+    .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+ 
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+ 
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .intro-topbar { padding: 20px 24px; }
+      .intro-hero { padding: 40px 24px; }
+      .intro-bottom { padding: 16px 24px; flex-direction: column; gap: 12px; }
+      .hours-label { margin-right: 0; }
+      .hours-item { padding: 0 10px; }
+      .hero-title { font-size: 3rem; }
+      .btn-enter { padding: 16px 36px; }
+    }

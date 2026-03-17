@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NEU Library — Admin Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="login-page">
+
+   <div class="bg-layer">
+    <div class="bg-radial"></div>
+    <div class="grid-lines"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div class="bg-pattern"></div>
+
+  <div class="login-wrapper">
+    <div class="login-card">
+
+      <div class="login-left">
+        <div class="brand">
+          <div class="neu-emblem"><img src="neuliblogo.png" width="50"></div>
+          <div class="brand-text">
+            <span class="brand-title">New Era University</span>
+            <span class="brand-sub">Library Management System</span>
+          </div>
+        </div>
+        <div class="login-hero">
+          <h2>Admin<br/>Portal.</h2>
+          <p>Access the library dashboard and visitor statistics.</p>
+        </div>
+        <div class="login-deco">
+          <div class="deco-circle c1"></div>
+          <div class="deco-circle c2"></div>
+          <div class="deco-circle c3"></div>
+        </div>
+      </div>
+
+      <div class="login-right">
+        <a href="index.html" class="back-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Back to Visitor Log
+        </a>
+
+        <h3>Admin Sign In</h3>
+        <p class="form-sub">Enter your admin credentials to continue</p>
+
+        <div id="error-msg" class="alert alert-error hidden"></div>
+
+        <form id="login-form">
+          <div class="field">
+            <label>Email Address</label>
+            <input type="email" id="email" placeholder="admin@neu.edu.ph" required />
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <div class="password-wrap">
+              <input type="password" id="password" placeholder="••••••••" required />
+              <button type="button" class="toggle-pw" onclick="togglePassword()">Show</button>
+            </div>
+          </div>
+          <button type="submit" class="btn-primary" id="login-btn">
+            <span>Sign In</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="module" src="js/auth.js"></script>
+  <script>
+    function togglePassword() {
+      const pw = document.getElementById('password');
+      const btn = document.querySelector('.toggle-pw');
+      if (pw.type === 'password') { pw.type = 'text'; btn.textContent = 'Hide'; }
+      else { pw.type = 'password'; btn.textContent = 'Show'; }
+    }
+  </script>
+</body>
+</html>
