@@ -348,3 +348,79 @@ body {
   .stats-grid, .college-grid { grid-template-columns: 1fr; }
   .purpose-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ── ADD BUTTON ── */
+.btn-add {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--navy); color: white;
+  border: none; border-radius: var(--radius-sm);
+  padding: 10px 20px; font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem; font-weight: 600; cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-add:hover { background: var(--navy-light); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+/* ── ACTION ICON BUTTONS ── */
+.action-cell { display: flex; gap: 8px; align-items: center; }
+.btn-icon {
+  width: 32px; height: 32px; border: none; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-icon-edit { background: var(--blue-light); color: var(--blue); }
+.btn-icon-edit:hover { background: var(--blue); color: white; }
+.btn-icon-danger { background: var(--rose-light); color: var(--rose); }
+.btn-icon-danger:hover { background: var(--rose); color: white; }
+
+/* ── STUDENT NUMBER CELL ── */
+.student-no-cell {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem; font-weight: 600; color: var(--navy);
+}
+
+/* ── MODALS ── */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 999;
+  background: rgba(10,22,40,0.7);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  backdrop-filter: blur(4px);
+}
+.modal {
+  background: white; border-radius: var(--radius);
+  padding: 32px; width: 100%; max-width: 520px;
+  box-shadow: var(--shadow-lg);
+  animation: fadeUp 0.25s ease;
+}
+.modal-sm { max-width: 400px; }
+.modal-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 24px;
+}
+.modal-header h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem; color: var(--navy);
+}
+.modal-close {
+  background: none; border: none; font-size: 1.1rem;
+  color: var(--gray-400); cursor: pointer; padding: 4px 8px;
+  border-radius: 6px; transition: all 0.2s;
+}
+.modal-close:hover { background: var(--gray-100); color: var(--gray-800); }
+.modal-actions {
+  display: flex; justify-content: flex-end; gap: 10px; margin-top: 8px;
+}
+.btn-cancel {
+  background: var(--gray-100); border: none; color: var(--gray-600);
+  padding: 10px 20px; border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+  font-weight: 500; cursor: pointer; transition: background 0.2s;
+}
+.btn-cancel:hover { background: var(--gray-200); }
+.btn-danger {
+  background: var(--rose); border: none; color: white;
+  padding: 10px 20px; border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+  font-weight: 600; cursor: pointer; transition: all 0.2s;
+}
+.btn-danger:hover { background: #be123c; }
