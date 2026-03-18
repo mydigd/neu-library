@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Verifying...</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="login-page">
+  <div class="bg-layer"><div class="bg-overlay"></div></div>
+  <div style="position:relative;z-index:1;display:flex;align-items:center;justify-content:center;min-height:100vh;">
+    <div style="text-align:center;color:white;">
+      <div class="spinner" style="margin:0 auto 16px;"></div>
+      <p id="status-msg" style="font-family:'DM Sans',sans-serif;font-size:1rem;opacity:0.7;">Verifying your account...</p>
+    </div>
+  </div>
+  <script type="module">
+    import { supabase } from './js/supabase.js'
+
+    const { data: { session } } = await supabase.auth.getSession()
+
+    if (!session) {
+      window.location.href = 'admin-login.html'
+    } else {
+      const email = session.user.email
+      const { data: roleData } = await supabase
+        .from('roles').select('role').eq('email', email).single()
+
+      if (roleData?.role === 'admin') {
+        window.location.href = 'admin.html'
+      } else {
+        await supabase.auth.signOut()
+        document.getElementById('status-msg').textContent = 'Access denied. Not an authorized admin.'
+        setTimeout(() => window.location.href = 'admin-login.html', 2000)
+      }
+    }
+  </script>
+</body>
+</html>

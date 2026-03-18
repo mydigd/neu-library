@@ -1,17 +1,13 @@
 import { supabase } from './supabase.js'
 
-// If already logged in, redirect to visitor page
+// If already logged in as admin, redirect
 const { data: { session } } = await supabase.auth.getSession()
 if (session) {
-  const email = session.user.email
-  if (!email.endsWith('@neu.edu.ph')) {
-    await supabase.auth.signOut()
-  } else {
-    window.location.href = 'visitor.html'
-  }
+  const { data: roleData } = await supabase
+    .from('roles').select('role').eq('email', session.user.email).single()
+  if (roleData?.role === 'admin') window.location.href = 'admin.html'
 }
 
-// Google Sign In button
 document.getElementById('google-btn').addEventListener('click', async () => {
   const errorMsg = document.getElementById('error-msg')
   const loadingMsg = document.getElementById('loading-msg')
@@ -22,10 +18,7 @@ document.getElementById('google-btn').addEventListener('click', async () => {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: window.location.origin + '/visitor.html',
-      queryParams: {
-        hd: 'neu.edu.ph' // restrict to NEU domain
-      }
+      redirectTo: window.location.origin + '/admin-callback.html'
     }
   })
 

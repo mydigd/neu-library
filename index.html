@@ -5,23 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>NEU Library</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap">
-  <link rel="stylesheet" href="css/intro-style.css" />
-
-<body>
- 
-  <!-- Background -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="intro-page">
   <div class="bg-layer">
-    <div class="bg-radial"></div>
+    <div class="bg-overlay"></div>
     <div class="grid-lines"></div>
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
   </div>
- 
+
   <div class="intro-wrapper">
- 
-    <!-- TOP BAR -->
     <header class="intro-topbar">
       <div class="neu-badge">
         <div class="neu-seal"><img src="neuliblogo.png" width="50"></div>
@@ -35,25 +30,23 @@
         <span id="clock-date">Loading...</span>
       </div>
     </header>
- 
-    <!-- HERO -->
+
     <section class="intro-hero">
       <p class="hero-eyebrow">University Library System</p>
       <h1 class="hero-title">
         Welcome to the
         <span class="gold-word">NEU Library</span>
       </h1>
-
-
+      <div class="hero-divider"></div>
+      <p class="hero-tagline">Your gateway to knowledge, research, and discovery. Please log your visit before entering.</p>
       <div class="enter-btn-wrap">
-        <a href="visitor.html" class="btn-enter">
+        <a href="index.html" class="btn-enter">
           <span>Enter the Library</span>
           <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
     </section>
- 
-    <!-- BOTTOM: LIBRARY HOURS -->
+
     <footer class="intro-bottom">
       <span class="hours-label">Library Hours</span>
       <div class="hours-list">
@@ -75,9 +68,21 @@
         <span id="status-text">Checking...</span>
       </div>
     </footer>
- 
   </div>
- 
-  <script type="module" src="js/intro.js"></script>
+
+  <script>
+    function updateClock() {
+      const now = new Date()
+      document.getElementById('clock-time').textContent = now.toLocaleTimeString('en-PH', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true })
+      document.getElementById('clock-date').textContent = now.toLocaleDateString('en-PH', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+      const day = now.getDay(), t = now.getHours() + now.getMinutes() / 60
+      const isOpen = (day >= 1 && day <= 5 && t >= 7.5 && t < 19) || (day === 6 && t >= 8 && t < 17)
+      const badge = document.getElementById('status-badge')
+      badge.className = 'status-dot ' + (isOpen ? 'open' : 'closed')
+      document.getElementById('status-text').textContent = isOpen ? 'Open Now' : 'Closed'
+    }
+    updateClock()
+    setInterval(updateClock, 1000)
+  </script>
 </body>
 </html>
