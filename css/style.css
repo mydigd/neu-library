@@ -191,7 +191,17 @@ body {
 .login-card { display: grid; grid-template-columns: 1fr 1fr; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-lg); min-height: 540px; }
 .login-left { background: linear-gradient(160deg, var(--navy-light) 0%, var(--navy) 100%); padding: 48px 40px; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; border-right: 1px solid rgba(201,168,76,0.15); }
 .brand { display: flex; align-items: center; gap: 14px; }
-.neu-emblem { width: 52px; height: 52px; background: var(--gold); color: var(--navy); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 1rem; flex-shrink: 0; }
+.neu-emblem { width: 48px; height: 48px;
+      background: var(--white);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--navy);
+      letter-spacing: 0.05em;
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.2);
+      flex-shrink: 0; }
 .brand-text { display: flex; flex-direction: column; }
 .brand-title { color: white; font-weight: 600; font-size: 0.9rem; }
 .brand-sub { color: rgba(255,255,255,0.45); font-size: 0.75rem; }

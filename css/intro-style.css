@@ -34,13 +34,10 @@
        cursor: default; 
     }
  
-    .bg-radial {
+   .bg-radial {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(rgba(31, 67, 120, 0.82), rgba(10, 22, 40, 0.82)),
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,168,76,0.15) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 80% at 100% 100%, rgba(201,168,76,0.08) 0%, transparent 50%);
+  background: linear-gradient(rgba(10, 22, 40, 0.75), rgba(10, 22, 40, 0.75));
 }
  
     /* ── LAYOUT ── */
