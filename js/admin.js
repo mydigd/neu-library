@@ -175,7 +175,11 @@ function renderLogs(search = '') {
       <td>${v.college || '—'}</td>
       <td>${v.reason || '—'}</td>
       <td><span class="badge ${v.is_employee ? 'badge-employee' : 'badge-student'}">${v.is_employee ? 'Employee' : 'Student'}</span></td>
-      <td>${new Date(v.visited_at).toLocaleString('en-PH', { dateStyle: 'medium', timeStyle: 'short' })}</td>
+      <td>${new Date(v.visited_at).toLocaleString('en-PH', {
+  dateStyle: 'medium',
+  timeStyle: 'short', 
+  timeZone: 'Asia/Manila'
+})}</td>
       <td>
         <button class="btn-icon btn-icon-danger" onclick="deleteLog('${v.id}')">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
