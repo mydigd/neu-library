@@ -2,7 +2,7 @@
  
 > A full-stack web application for managing and monitoring library visitors at New Era University.
  
-🌐 **Live Application:** [https://neulibraryloginsystem.netlify.app](https://neulibraryloginsystem.netlify.app)
+🌐 **Live Application:** [https://neulibraryloginsystem.netlify.app](https://neulibrarylog.netlify.app/)]  
 
 ## 🏛️ Overview
  
