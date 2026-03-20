@@ -154,12 +154,19 @@ function renderLogs(search = '') {
   let filtered = allLogs
   if (search) {
     const term = search.toLowerCase()
-    filtered = allLogs.filter(v =>
-      v.visitors?.full_name?.toLowerCase().includes(term) ||
-      v.email?.toLowerCase().includes(term) ||
-      v.student_number?.toLowerCase().includes(term) ||
-      v.college?.toLowerCase().includes(term)
-    )
+    filtered = allLogs.filter(v => {
+      const timeStr = new Date(v.visited_at).toLocaleString('en-PH', {
+        dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Manila'
+      }).toLowerCase()
+      return (
+        v.visitors?.full_name?.toLowerCase().includes(term) ||
+        v.email?.toLowerCase().includes(term) ||
+        v.student_number?.toLowerCase().includes(term) ||
+        v.college?.toLowerCase().includes(term) ||
+        v.reason?.toLowerCase().includes(term) ||
+        timeStr.includes(term)
+      )
+    })
   }
 
   const tbody = document.getElementById('logs-tbody')
@@ -175,14 +182,10 @@ function renderLogs(search = '') {
       <td>${v.college || '—'}</td>
       <td>${v.reason || '—'}</td>
       <td><span class="badge ${v.is_employee ? 'badge-employee' : 'badge-student'}">${v.is_employee ? 'Employee' : 'Student'}</span></td>
-      <td>${new Date(v.visited_at).toLocaleString('en-PH', {
-  dateStyle: 'medium',
-  timeStyle: 'short', 
-  timeZone: 'Asia/Manila'
-})}</td>
+      <td>${new Date(v.visited_at).toLocaleString('en-PH', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Manila' })}</td>
       <td>
-        <button class="btn-icon btn-icon-danger" onclick="deleteLog('${v.id}')">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+        <button class="btn-icon btn-icon-warn" title="Block User" onclick="blockVisitor('${v.email}', '${v.visitors?.full_name || v.email}')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
         </button>
       </td>
     </tr>`).join('')
@@ -190,13 +193,16 @@ function renderLogs(search = '') {
 
 document.getElementById('logs-search').addEventListener('input', e => renderLogs(e.target.value))
 
-window.deleteLog = (id) => {
+window.blockVisitor = (email, name) => {
   showConfirm(
-    'Delete Visit Log',
-    'Are you sure you want to delete this visit log? This action cannot be undone.',
+    'Block User',
+    `Are you sure you want to block "${name}"? They will no longer be able to log visits.`,
     async () => {
-      const { error } = await supabase.from('visits').delete().eq('id', id)
-      if (error) { alert('Failed to delete. Please try again.'); return }
+      const { error } = await supabase
+        .from('visitors')
+        .update({ is_blocked: true })
+        .eq('email', email)
+      if (error) { alert('Failed to block user. Please try again.'); return }
       closeModal('confirm-modal')
       loadVisitLogs()
     }
@@ -238,16 +244,24 @@ function renderVisitors(search = '') {
   }
 
   tbody.innerHTML = filtered.map(v => `
-    <tr>
-      <td><strong>${v.full_name || '—'}</strong></td>
+    <tr class="${v.is_blocked ? 'row-blocked' : ''}">
+      <td><strong>${v.full_name || '—'}</strong> ${v.is_blocked ? '<span class="badge badge-blocked">Blocked</span>' : ''}</td>
       <td><small style="color:var(--gray-400)">${v.email}</small></td>
       <td class="student-no-cell">${v.student_number || '—'}</td>
       <td>${v.college || '—'}</td>
       <td><span class="badge ${v.is_employee ? 'badge-employee' : 'badge-student'}">${v.is_employee ? 'Employee' : 'Student'}</span></td>
-      <td>${new Date(v.created_at).toLocaleDateString('en-PH', { dateStyle: 'medium' })}</td>
+      <td>${new Date(v.created_at).toLocaleDateString('en-PH', { dateStyle: 'medium', timeZone: 'Asia/Manila' })}</td>
       <td class="action-cell">
         <button class="btn-icon btn-icon-edit" onclick='openEditVisitor(${JSON.stringify(v)})'>
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </button>
+        <button class="btn-icon ${v.is_blocked ? 'btn-icon-success' : 'btn-icon-warn'}" 
+          title="${v.is_blocked ? 'Unblock User' : 'Block User'}" 
+          onclick="toggleBlock('${v.id}', '${v.full_name}', ${v.is_blocked})">
+          ${v.is_blocked
+            ? `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>`
+            : `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>`
+          }
         </button>
         <button class="btn-icon btn-icon-danger" onclick="deleteVisitor('${v.id}', '${v.full_name}')">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
@@ -314,6 +328,24 @@ document.getElementById('edit-visitor-form').addEventListener('submit', async (e
   loadVisitors()
 })
 
+// Block / Unblock Visitor
+window.toggleBlock = (id, name, isBlocked) => {
+  const action = isBlocked ? 'unblock' : 'block'
+  showConfirm(
+    isBlocked ? 'Unblock User' : 'Block User',
+    `Are you sure you want to ${action} "${name}"? ${isBlocked ? 'They will be able to log visits again.' : 'They will no longer be able to log visits.'}`,
+    async () => {
+      const { error } = await supabase
+        .from('visitors')
+        .update({ is_blocked: !isBlocked })
+        .eq('id', id)
+      if (error) { alert(`Failed to ${action} user.`); return }
+      closeModal('confirm-modal')
+      loadVisitors()
+    }
+  )
+}
+
 // Delete Visitor
 window.deleteVisitor = (id, name) => {
   showConfirm(
@@ -351,7 +383,7 @@ async function loadAdmins() {
     <tr>
       <td><strong>${a.email}</strong> ${a.email === currentAdminEmail ? '<span class="badge badge-student" style="margin-left:8px">You</span>' : ''}</td>
       <td><span class="badge badge-employee">Admin</span></td>
-      <td>${new Date(a.created_at).toLocaleDateString('en-PH', { dateStyle: 'medium' })}</td>
+      <td>${new Date(a.created_at).toLocaleDateString('en-PH', { dateStyle: 'medium', timeZone: 'Asia/Manila' })}</td>
       <td>
         ${a.email !== currentAdminEmail ? `
         <button class="btn-icon btn-icon-danger" onclick="deleteAdmin('${a.id}', '${a.email}')">
@@ -407,5 +439,58 @@ function showConfirm(title, message, onConfirm) {
   openModal('confirm-modal')
 }
 
+// ============================================
+// DASHBOARD SEARCH
+// ============================================
+let allVisitsCache = []
+
+async function loadDashboardSearch() {
+  const { data } = await supabase
+    .from('visits')
+    .select('*, visitors(full_name)')
+    .order('visited_at', { ascending: false })
+  allVisitsCache = data || []
+}
+
+function renderDashboardSearch(search = '') {
+  const tbody = document.getElementById('dashboard-search-tbody')
+  if (!search.trim()) {
+    tbody.innerHTML = '<tr><td colspan="6" class="table-empty">Use the search bar above to find visit records.</td></tr>'
+    return
+  }
+
+  const term = search.toLowerCase()
+  const filtered = allVisitsCache.filter(v => {
+    const timeStr = new Date(v.visited_at).toLocaleString('en-PH', {
+      dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Manila'
+    }).toLowerCase()
+    return (
+      v.visitors?.full_name?.toLowerCase().includes(term) ||
+      v.student_number?.toLowerCase().includes(term) ||
+      v.college?.toLowerCase().includes(term) ||
+      v.reason?.toLowerCase().includes(term) ||
+      timeStr.includes(term)
+    )
+  })
+
+  if (!filtered.length) {
+    tbody.innerHTML = '<tr><td colspan="6" class="table-empty">No results found.</td></tr>'
+    return
+  }
+
+  tbody.innerHTML = filtered.map(v => `
+    <tr>
+      <td><strong>${v.visitors?.full_name || '—'}</strong></td>
+      <td class="student-no-cell">${v.student_number || '—'}</td>
+      <td>${v.college || '—'}</td>
+      <td>${v.reason || '—'}</td>
+      <td><span class="badge ${v.is_employee ? 'badge-employee' : 'badge-student'}">${v.is_employee ? 'Employee' : 'Student'}</span></td>
+      <td>${new Date(v.visited_at).toLocaleString('en-PH', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Manila' })}</td>
+    </tr>`).join('')
+}
+
+document.getElementById('dashboard-search').addEventListener('input', e => renderDashboardSearch(e.target.value))
+
 // Initial load
 loadDashboard()
+loadDashboardSearch()

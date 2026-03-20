@@ -123,7 +123,7 @@ body {
 .field input, .field select {
   padding: 12px 14px; border: 1.5px solid var(--gray-200); border-radius: var(--radius-sm);
   font-family: 'DM Sans', sans-serif; font-size: 0.95rem; color: var(--gray-800);
-  background: white; transition: border 0.2s, box-shadow 0.2s; 
+  background: white; transition: border 0.2s, box-shadow 0.2s; -webkit-appearance: none;
 }
 .field input:focus, .field select:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(10,22,40,0.08); }
 
@@ -202,7 +202,6 @@ body {
       letter-spacing: 0.05em;
       box-shadow: 0 0 0 3px rgba(201,168,76,0.2);
       flex-shrink: 0; }
-.brand-text { display: flex; flex-direction: column; }
 .brand-title { color: white; font-weight: 600; font-size: 0.9rem; }
 .brand-sub { color: rgba(255,255,255,0.45); font-size: 0.75rem; }
 .login-hero { position: relative; z-index: 1; }
@@ -222,7 +221,17 @@ body {
 .top-bar { background: var(--navy); border-bottom: 1px solid rgba(201,168,76,0.12); position: sticky; top: 0; z-index: 100; }
 .top-bar-inner { max-width: 900px; margin: 0 auto; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
 .brand-small { display: flex; align-items: center; gap: 10px; font-weight: 600; color: white; }
-.neu-emblem-sm { width: 34px; height: 34px; background: var(--gold); color: var(--navy); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 0.7rem; font-weight: 700; }
+.neu-emblem { width: 48px; height: 48px;
+      background: var(--white);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--navy);
+      letter-spacing: 0.05em;
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.2);
+      flex-shrink: 0; }
 .user-info { display: flex; align-items: center; gap: 10px; }
 .user-avatar { width: 34px; height: 34px; background: var(--gold); color: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 700; flex-shrink: 0; }
 .user-details { display: flex; flex-direction: column; }
@@ -306,7 +315,7 @@ body {
 .filters-row { background: white; border-radius: var(--radius); padding: 20px 24px; box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200); margin-bottom: 24px; }
 .filters-row h3 { font-size: 0.95rem; font-weight: 600; color: var(--navy); margin-bottom: 14px; }
 .filters-group { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-.filter-select { padding: 8px 14px; border: 1.5px solid var(--gray-200); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--gray-800); background: white; cursor: pointer; }
+.filter-select { padding: 8px 14px; border: 1.5px solid var(--gray-200); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--gray-800); background: white; cursor: pointer; -webkit-appearance: none; }
 .filter-select:focus { outline: none; border-color: var(--navy); }
 
 /* ── COLLEGE GRID ── */
@@ -434,3 +443,13 @@ body {
   font-weight: 600; cursor: pointer; transition: all 0.2s;
 }
 .btn-danger:hover { background: #be123c; }
+
+/* ── BLOCK/WARN BUTTON ── */
+.btn-icon-warn { background: #fff7ed; color: #ea580c; }
+.btn-icon-warn:hover { background: #ea580c; color: white; }
+.btn-icon-success { background: var(--green-light); color: var(--green); }
+.btn-icon-success:hover { background: var(--green); color: white; }
+
+/* ── BLOCKED ROW ── */
+.row-blocked td { opacity: 0.5; }
+.badge-blocked { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
