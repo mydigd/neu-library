@@ -316,7 +316,7 @@ body {
 .filters-row h3 { font-size: 0.95rem; font-weight: 600; color: var(--navy); margin-bottom: 14px; }
 .filters-group { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
 .filter-select { padding: 8px 14px; border: 1.5px solid var(--gray-200); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--gray-800); background: white; cursor: pointer;}
-.filter-select:focus { outline: none; border-color: var(--navy); }
+.filter-select:focus { outline: none; border-color: var(--navy); } 
 
 /* ── COLLEGE GRID ── */
 .breakdown-header { margin-bottom: 14px; }
